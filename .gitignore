@@ -63,3 +63,8 @@ Thumbs.db
 # Supabase
 supabase/.branches
 supabase/.temp
+
+# Build logs / artifacts
+build_log.txt
+build_error_raw.log
+*.tsbuildinfo

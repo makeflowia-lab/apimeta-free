@@ -111,8 +111,11 @@ export function RegistrationLogForm({ initialData, onSuccess, onCancel }: Props)
 
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white/5 backdrop-blur-xl p-8 rounded-3xl border border-white/10 space-y-10 shadow-2xl">
-      <div className="flex items-center gap-3 mb-2">
+    <form onSubmit={handleSubmit} className="bg-slate-900/40 backdrop-blur-3xl p-6 md:p-12 rounded-[3rem] border border-white/5 space-y-12 shadow-2xl relative overflow-hidden">
+      {/* Decorative background element */}
+      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-blue-600/5 blur-[120px] rounded-full pointer-events-none" />
+      
+      <div className="flex flex-col md:flex-row items-center gap-6 mb-4 relative z-10">
         <div className="h-12 w-12 bg-blue-500/20 rounded-2xl flex items-center justify-center">
           <svg className="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />

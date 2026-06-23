@@ -2,18 +2,24 @@ import { neon } from "@neondatabase/serverless";
 
 console.log(`[DB] Evaluating module - Running on: ${typeof window === 'undefined' ? 'Server' : 'Client'}`);
 
-if (!process.env.DATABASE_URL) {
-  console.error('[DB] Error: DATABASE_URL is missing!');
-  throw new Error("DATABASE_URL is not defined in environment variables");
+const databaseUrl = process.env.DATABASE_URL;
+
+if (!databaseUrl && process.env.NODE_ENV === 'production') {
+  console.warn('[DB] Warning: DATABASE_URL is missing in production. Build may fail if static page generation requires DB access.');
 }
 
-export const sql = neon(process.env.DATABASE_URL);
+export const sql = databaseUrl ? neon(databaseUrl) : null;
 
 export async function executeQuery<T>(
   query: string,
   params: any[] = [],
 ): Promise<T[]> {
   console.log(`[DB] Executing query: ${query}`);
+  if (!sql) {
+    console.error("[DB] Error: SQL client not initialized. DATABASE_URL might be missing.");
+    return [] as T[];
+  }
+  
   try {
     const result = await (sql as any).query(query, params);
     return result as T[];

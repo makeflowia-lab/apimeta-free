@@ -21,32 +21,6 @@ export function RegistrationLogList() {
     }
   };
 
-  if (editingLog) {
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h3 className="text-xl font-black text-white italic uppercase tracking-widest">
-            EDITANDO <span className="text-blue-500">REGISTRO</span>
-          </h3>
-          <button 
-            onClick={() => setEditingLog(null)}
-            className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-gray-400 hover:text-white transition-all text-xs font-bold"
-          >
-            VOLVER AL LISTADO
-          </button>
-        </div>
-        <RegistrationLogForm 
-          initialData={editingLog} 
-          onSuccess={() => {
-            setEditingLog(null);
-            fetchInitialData();
-          }}
-          onCancel={() => setEditingLog(null)}
-        />
-      </div>
-    );
-  }
-
   if (registrationLogs.length === 0 && !isLoading) {
     return (
       <div className="bg-white/5 backdrop-blur-xl p-12 rounded-3xl border border-white/10 text-center space-y-4">
@@ -95,6 +69,23 @@ export function RegistrationLogList() {
       </div>
 
       <div className="grid grid-cols-1 gap-4">
+        {/* Modal de Edición */}
+        {editingLog && (
+          <div className="fixed inset-0 bg-black/90 backdrop-blur-xl z-50 overflow-y-auto pt-10 pb-20 px-4">
+            <div className="flex justify-center items-start min-h-full">
+              <div className="w-full max-w-7xl animate-in fade-in zoom-in-95 duration-300">
+                <div className="bg-slate-900 border border-white/10 rounded-[3rem] shadow-2xl overflow-hidden mb-12">
+                  <RegistrationLogForm 
+                    initialData={editingLog}
+                    onSuccess={() => setEditingLog(null)} 
+                    onCancel={() => setEditingLog(null)} 
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {registrationLogs.map((log) => {
           const isExpanded = expandedLog === log.id;
           
